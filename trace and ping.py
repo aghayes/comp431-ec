@@ -6,6 +6,8 @@ import threading
 import datetime
 def tap(url):
     route = subprocess.run(f"traceroute {url}", shell=True, capture_output=True, encoding='utf-8')
+    with open(f"{sys.argv[1]}_{datetime.datetime.now()}.txt".replace(":", "-"), "x") as f:
+        f.write(route.stdout)
     ips = re.findall("\\((\\d*\\.\\d*\\.\\d*\\.\\d*)\\)", route.stdout)[1:]
     print(ips)
     return ips
